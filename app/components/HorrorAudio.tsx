@@ -104,24 +104,20 @@ const HorrorAudio = ({
       <audio
         ref={ambientAudioRef}
         loop
-        preload="auto"
+        preload="none"
         onLoadedData={() => console.log('Ambient audio loaded')}
         onError={() => console.log('Ambient audio failed to load')}
       >
         <source src="/audio/zombie1.mp3" type="audio/mpeg" />
-        {/* <source src="/audio/horror-ambient.ogg" type="audio/ogg" />
-        <source src="/audio/transition.wav" type="audio/wav" /> */}
       </audio>
 
       <audio
         ref={zombieAudioRef}
-        preload="auto"
+        preload="none"
         onLoadedData={() => console.log('Zombie audio loaded')}
         onError={() => console.log('Zombie audio failed to load')}
       >
         <source src="/audio/zombie1.mp3" type="audio/mpeg" />
-        {/* <source src="/audio/zombie-growls.ogg" type="audio/ogg" />
-        <source src="/audio/zombie-growls.wav" type="audio/wav" /> */}
       </audio>
 
       {/* Audio controls - Simple mute/unmute toggle */}

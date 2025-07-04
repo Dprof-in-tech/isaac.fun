@@ -1,8 +1,11 @@
 'use client'
 import { Canvas } from '@react-three/fiber'
 import { useGLTF, OrbitControls, useAnimations } from '@react-three/drei'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, Suspense } from 'react'
 import * as THREE from 'three'
+
+// Preload the model
+useGLTF.preload('/models/zombie.glb')
 
 
 const ThingHand = () => {
@@ -64,6 +67,13 @@ const ThingHand = () => {
 }
 
 
+const ModelFallback = () => (
+  <mesh position={[0, -1, 0]}>
+    <boxGeometry args={[1, 2, 0.5]} />
+    <meshStandardMaterial color="#8B0000" />
+  </mesh>
+)
+
 export default function ThingIntro() {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
@@ -76,6 +86,11 @@ export default function ThingIntro() {
       }}
       dpr={isMobile ? [1, 1.5] : [1, 2]}
       performance={{ min: 0.5 }}
+      gl={{ 
+        antialias: false,
+        alpha: false,
+        powerPreference: "high-performance"
+      }}
     >
       <color attach="background" args={['#020000']} />
       
@@ -87,7 +102,10 @@ export default function ThingIntro() {
         color="#DC143C"
       />
       
-      <ThingHand />
+      <Suspense fallback={<ModelFallback />}>
+        <ThingHand />
+      </Suspense>
+      
       <OrbitControls 
         enableZoom={false} 
         enablePan={false} 
